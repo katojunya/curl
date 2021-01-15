@@ -1,7 +1,7 @@
 Long: fail-with-body
 Protocols: HTTP
 Help: Fail on HTTP errors but save the body
-Category: http
+Category: http output
 Added: 7.76.0
 See-also: fail
 ---
