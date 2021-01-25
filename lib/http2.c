@@ -1343,6 +1343,7 @@ static int h2_process_pending_input(struct Curl_easy *data,
   nread = httpc->inbuflen - httpc->nread_inbuf;
   inbuf = httpc->inbuf + httpc->nread_inbuf;
 
+  httpc->trnsfr = data; /* set the transfer */
   rv = nghttp2_session_mem_recv(httpc->h2, (const uint8_t *)inbuf, nread);
   if(rv < 0) {
     failf(data,
