@@ -299,7 +299,7 @@ CURLcode Curl_output_aws_sigv4(struct Curl_easy *data, bool proxy)
 
   auth = curl_maprintf("Authorization: %s4-HMAC-SHA256 Credential=%s/%s, "
                        "SignedHeaders=%s, Signature=%s",
-                       up_provider, data->set.str[STRING_USERNAME], cred_scope,
+                       up_provider, data->state.aptr.user, cred_scope,
                        signed_headers, sha_hex);
   if(!auth) {
     ret = CURLE_OUT_OF_MEMORY;
