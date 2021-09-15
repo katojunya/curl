@@ -84,7 +84,7 @@ struct h3out {
 #define QUIC_CIPHERS                                                          \
   "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_"               \
   "POLY1305_SHA256:TLS_AES_128_CCM_SHA256"
-#define QUIC_GROUPS "P-256:X25519:P-384:P-521"
+#define QUIC_GROUPS "X25519:P-256:P-384:P-521"
 #elif defined(USE_GNUTLS)
 #define QUIC_PRIORITY \
   "NORMAL:-VERS-ALL:+VERS-TLS1.3:-CIPHER-ALL:+AES-128-GCM:+AES-256-GCM:" \
