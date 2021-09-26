@@ -50,6 +50,7 @@
 #define MAX_ALTSVC_ALPNLENSTR "10"
 #define MAX_ALTSVC_ALPNLEN 10
 
+/*
 #if defined(USE_QUICHE) && !defined(UNITTESTS)
 #define H3VERSION "h3-29"
 #elif defined(USE_NGTCP2) && !defined(UNITTESTS)
@@ -57,6 +58,7 @@
 #else
 #define H3VERSION "h3"
 #endif
+*/
 
 static enum alpnid alpn2alpnid(char *name)
 {
@@ -64,7 +66,7 @@ static enum alpnid alpn2alpnid(char *name)
     return ALPN_h1;
   if(strcasecompare(name, "h2"))
     return ALPN_h2;
-  if(strcasecompare(name, H3VERSION))
+  if(strcasecompare(name, "h3"))
     return ALPN_h3;
   return ALPN_none; /* unknown, probably rubbish input */
 }
@@ -78,7 +80,7 @@ const char *Curl_alpnid2str(enum alpnid id)
   case ALPN_h2:
     return "h2";
   case ALPN_h3:
-    return H3VERSION;
+    return "h3";
   default:
     return ""; /* bad */
   }

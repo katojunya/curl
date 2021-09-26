@@ -60,7 +60,7 @@
 #define H3BUGF(x) do { } while(0)
 #endif
 
-#define H3_ALPN_H3_29 "\x5h3-29"
+#define H3_ALPN "\x2h3"
 
 /*
  * This holds outgoing HTTP/3 stream data that is used by nghttp3 until acked.
@@ -303,10 +303,10 @@ static int quic_init_ssl(struct quicsocket *qs)
 
   SSL_set_app_data(qs->ssl, qs);
   SSL_set_connect_state(qs->ssl);
-  SSL_set_quic_use_legacy_codepoint(qs->ssl, 1);
+  SSL_set_quic_use_legacy_codepoint(qs->ssl, 0);
 
-  alpn = (const uint8_t *)H3_ALPN_H3_29;
-  alpnlen = sizeof(H3_ALPN_H3_29) - 1;
+  alpn = (const uint8_t *)H3_ALPN;
+  alpnlen = sizeof(H3_ALPN) - 1;
   if(alpn)
     SSL_set_alpn_protos(qs->ssl, alpn, (int)alpnlen);
 
@@ -483,8 +483,8 @@ static int quic_init_ssl(struct quicsocket *qs)
   }
 
   /* strip the first byte (the length) from NGHTTP3_ALPN_H3 */
-  alpn.data = (unsigned char *)H3_ALPN_H3_29 + 1;
-  alpn.size = sizeof(H3_ALPN_H3_29) - 2;
+  alpn.data = (unsigned char *)H3_ALPN + 1;
+  alpn.size = sizeof(H3_ALPN) - 2;
   if(alpn.data)
     gnutls_alpn_set_protocols(qs->ssl, &alpn, 1, 0);
 
@@ -775,7 +775,7 @@ CURLcode Curl_quic_connect(struct Curl_easy *data,
   ngtcp2_addr_init(&path.remote, addr, addrlen);
 
   rc = ngtcp2_conn_client_new(&qs->qconn, &qs->dcid, &qs->scid, &path,
-                              NGTCP2_PROTO_VER_MIN, &ng_callbacks,
+                              NGTCP2_PROTO_VER_V1, &ng_callbacks,
                               &qs->settings, &qs->transport_params, NULL, qs);
   if(rc)
     return CURLE_QUIC_CONNECT_ERROR;
